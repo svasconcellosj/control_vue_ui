@@ -1,10 +1,10 @@
 <template>
-  <div class="containerInterno" :style="backgroundColor">
+  <div class="nb-container" :style="backgroundColor">
     <div class="grid">
       <div class="col-2">
         <nav class="centraliza">
           <div>
-            <a v-bind:href="url || '#'">{{ logo || "Site" }}</a>
+            <router-link :to="url || '/'">{{ logo || "Site" }}</router-link>
           </div>
         </nav>
       </div>
@@ -21,16 +21,16 @@
     </div>
 
     <Sidebar :visible.sync="exibirMenu1" position="right" >
-      <ul class= "navbar-menu" >
-        <li class="navbar-usuario">usuario</li>
-        <li class="navbar-item" routerLinkActive="ativo"><a routerLink="dashboard">Dashboard</a></li>
-        <li class="navbar-item" routerLinkActive="ativo"><a routerLink="lancamentos">Lançamentos</a></li>
-        <li class="navbar-item" routerLinkActive="ativo"><a routerLink="contas">Contas</a></li>
-        <li class="navbar-item" routerLinkActive="ativo"><a routerLink="categorias">Categorias</a></li>
-        <li class="navbar-item" routerLinkActive="ativo"><a routerLink="transferencias">Transferências</a></li>
-        <li class="navbar-item" routerLinkActive="ativo"><a routerLink="estatisticas">Estatísticas</a></li>
-        <li class="navbar-item" routerLinkActive="ativo"><a routerLink="plantas">Plantas</a></li>
-        <li class="navbar-item" ><a >Logout</a></li>
+      <ul class= "nb-menu" >
+        <li class="nb-usuario">usuario</li>
+        <li><router-link to="/" class="nb-item">Dashboard</router-link></li>
+        <li><router-link to="/lancamentos" class="nb-item">Lançamentos</router-link></li>
+        <li><router-link to="/contas" class="nb-item">Contas</router-link></li>
+        <li><router-link to="/categorias" class="nb-item">Categorias</router-link></li>
+        <li><router-link to="/transferencias" class="nb-item">Transferências</router-link></li>
+        <li><router-link to="/estatisticas" class="nb-item">Estatísticas</router-link></li>
+        <li><router-link to="/plantas" class="nb-item">Plantas</router-link></li>
+        <li><router-link to="/" class="nb-item">Logout</router-link></li>
       </ul>
     </Sidebar>
 
@@ -67,7 +67,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.containerInterno {
+.nb-container {
   background-color: var(--backgroundColor);
 }
 
@@ -95,10 +95,18 @@ li {
 
 }
 
-.navbar-menu li:hover {
+.nb-menu li:hover {
   border-radius: 5px;
   background-color: var(--hover-color);
   text-transform: uppercase;
+}
+
+.nb-item {
+  color:  var(--primary-color-text);
+}
+
+.nb-item:hover {
+  color:  var(--text-color-secondary);
 }
 
 </style>
