@@ -24,12 +24,19 @@
 
     <div class="grid">
       <div class="col-12">
-        <DataTable :value="contaPesquisa" :paginator="true" :rows="5"
+        <DataTable :value="contaPesquisa" :paginator="true" :rows="5" :loading="loading" dataKey="id"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport"
           currentPageReportTemplate="Total de contas: {totalRecords}">
-          <Column field="id" header="ID"></Column>
-          <Column field="descricao" header="Descrição"></Column>
-          <Column field="saldo" header="Saldo"></Column>
+          <Column field="id" header="ID" sortable></Column>
+          <Column field="descricao" header="Descrição" sortable></Column>
+          <Column field="saldo" header="Saldo" ></Column>
+          <Column field="" header="Opções"></Column>
+          <template #loading>
+              Carregando contas... Por favor aguarde!
+          </template>
+          <template #empty>
+            Nenhuma conta encontrada
+          </template>
         </DataTable>
       </div>
     </div>
@@ -63,6 +70,10 @@ export default {
   },
   data() {
     return {
+      loading: true,
+      lazyParams: {},
+      totalRecords: 0,
+
       contaPesquisa: [],
       contaForm: { descricao: '' }
     };
@@ -70,16 +81,22 @@ export default {
   mounted() {
     ContaService.lista().then(response => {
       this.contaPesquisa = response.data;
+      this.loading = false;
     });
+
   },
   methods: {
     pesquisar() {
+      this.loading = true;
       ContaService.pesquisar(this.contaForm.descricao)
         .then(response => {
-          console.log(response.data.content)
+          console.log(response.data)
           this.contaPesquisa = response.data.content;
+          this.totalRecords = response.data.totalElements;
         });
-    }
+      this.loading = false;
+    },
+
   }
 };
 </script>

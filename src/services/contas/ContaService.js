@@ -1,5 +1,4 @@
 import { http } from '@/services/config';
-
 export default {
 
   lista:() => {
